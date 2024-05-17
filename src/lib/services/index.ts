@@ -2,3 +2,4 @@
 //  use Service functions to interact with the database
 
 export { UserService } from "./user";
+export { PostService } from "./post";

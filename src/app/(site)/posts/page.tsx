@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/authOptions";
-import { ArticlePage } from "@/components/ui/pages/ArticlePage";
+import { ArticlePage } from "@/components/ui/pages";
 import { PostRequest } from "@/lib/requests";
 import { CustomSession } from "@/types";
 import { getServerSession } from "next-auth";

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArticlePage } from "@/components/ui/pages/ArticlePage";
+import { ArticlePage } from "@/components/ui/pages";
 import { useAuthUser } from "@/lib/hooks";
 import { PostRequest } from "@/lib/requests";
 import { getErrorMessage } from "@/lib/utils";
