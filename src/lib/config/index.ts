@@ -4,6 +4,11 @@ interface CustomAxiosInstance extends AxiosInstance {
     accessToken?: string;
 }
 
+export const axiosPublicNodeServer: AxiosInstance = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_BASE_NODE_URL,
+    withCredentials: true
+});
+
 export const authNodeAxios: CustomAxiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_BASE_NODE_URL,
     withCredentials: true

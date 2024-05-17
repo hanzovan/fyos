@@ -1,5 +1,5 @@
 import { PostBody, PostResponse } from "@/types";
-import { authAxios, authNodeAxios } from "../config";
+import { authAxios, authNodeAxios, axiosPublic, axiosPublicNodeServer } from "../config";
 import { getErrorMessage } from "../utils";
 
 const createNewPost = async (body: PostBody, accessToken: string | undefined): Promise<PostResponse> => {
@@ -39,6 +39,15 @@ const getAllNodeAPIPosts = async (accessToken: string | undefined) => {
     }
 }
 
-const PostRequest = { createNewPost, getAllNodeAPIPosts };
+const getAllNodePublicPosts = async() => {
+    try {
+        const result = await axiosPublicNodeServer.get("/posts?type=public");
+        return result.data;
+    } catch (error) {
+        throw new Error(error instanceof Error ? error.message : "An unknown error occurred while trying postrequest.getPublicPost");
+    }
+}
+
+const PostRequest = { createNewPost, getAllNodeAPIPosts, getAllNodePublicPosts };
 
 export { PostRequest };
