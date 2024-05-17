@@ -19,36 +19,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Person } from "@mui/icons-material";
-
-const publicPages = [{ title: "Articles", url: "/articles" }];
-
-const adminPages = [
-  { title: "Dashboard", url: "/dashboard" },
-  { title: "Server Articles", url: "/articles" },
-  { title: "Client Blog", url: "/blog" },
-  { title: "Node API Posts", url: "/posts" },
-  { title: "All Users", url: "/users" },
-];
-
-const adminNavItems = [
-  { title: "Dashboard", url: "/dashboard" },
-  { title: "Profile", url: "/profile" },
-  { title: "Create Post", url: "/create-post" },
-  { title: "Logout", url: "/api/auth/signout" },
-];
-
-const userPages = [
-  { title: "Dashboard", url: "/dashboard" },
-  { title: "Server Articles", url: "/articles" },
-  { title: "Client Blog", url: "/blog" },
-  { title: "Node API Posts", url: "/posts" },
-];
-
-const userMenuItems = [
-  { title: "Dashboard", url: "/dashboard" },
-  { title: "Profile", url: "/profile" },
-  { title: "Logout", url: "/api/auth/signout" },
-];
+import { navItems, settingItems } from "@/lib/routes/navigatingConfig";
 
 function SiteNavbar({ session }: SiteSessionProps) {
   const pathname = usePathname();
@@ -78,15 +49,15 @@ function SiteNavbar({ session }: SiteSessionProps) {
   const checkRole = checkUserRole(session?.user?.role);
 
   const pages = checkRole.isAdminRole
-    ? adminPages
+    ? navItems.adminPages
     : checkRole.isUserRole
-    ? userPages
-    : publicPages;
+    ? navItems.userPages
+    : navItems.publicPages
 
   const settings = checkRole.isAdminRole
-    ? adminNavItems
+    ? settingItems.adminNavItems
     : checkRole.isUserRole
-    ? userMenuItems
+    ? settingItems.userMenuItems
     : [];
 
   return (
