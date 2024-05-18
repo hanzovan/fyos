@@ -7,6 +7,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { MainNavbar } from "@/components/ui/organisms/MainNavbar";
 import { NextAuthSessionProvider } from "@/components/providers";
+import { ScrollToTop } from "@/components/ui/organisms";
 
 
 export const metadata: Metadata = {
@@ -25,7 +26,9 @@ export default function RootLayout({
         <body lang="en">
           <MainNavbar />
           <main>
-            {children}
+            <ScrollToTop>
+              {children}
+            </ScrollToTop>
           </main>
         </body>
       </NextAuthSessionProvider>
