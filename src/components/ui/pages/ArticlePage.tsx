@@ -1,6 +1,6 @@
 import { IPost } from "@/types";
 import { Box, Container, Grid, Typography } from "@mui/material";
-import { PostCard } from "../organisms/PostCard";
+import { PostCard } from "../organisms";
 
 interface ArticleProps {
     title: string;
