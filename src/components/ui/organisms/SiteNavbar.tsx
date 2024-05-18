@@ -30,6 +30,7 @@ function SiteNavbar({ session }: SiteSessionProps) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+  const [isScrolled, setIsScrolled] = React.useState(false);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -60,8 +61,28 @@ function SiteNavbar({ session }: SiteSessionProps) {
     ? settingItems.userMenuItems
     : [];
 
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    }
+  }, []);
+
   return (
-    <AppBar position="static">
+    <AppBar 
+      position="fixed" 
+      sx={{ 
+        backgroundColor: isScrolled ? "rgba(0, 0, 0, 0.8)" : "transparent",
+        boxShadow: isScrolled ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
+        transition: "background-color 0.3s ease" 
+      }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
