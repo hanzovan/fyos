@@ -16,7 +16,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             <Paper sx={{ height: "100%" }}>
                 <Box
                     component={Link}
-                    href={`/blog${post.slug}`}
+                    href={`/articles/${post.slug}`}
                     passHref
                     sx={{ cursor: "pointer" }}
                 >
@@ -35,7 +35,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
                 <Box sx={{ p: 1 }}>
                     <Typography
                         component={Link}
-                        href={`/blog${post.slug}`}
+                        href={`/articles/${post.slug}`}
                         passHref
                         sx={{
                             cursor: "pointer",
@@ -60,7 +60,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
                             </Typography>
                         </Box>
                         <Box>
-                            <Link href={`/blog${post.slug}`} passHref>
+                            <Link href={`/articles/${post.slug}`} passHref>
                                 <Avatar
                                     sx={{ height: 20, width: 20 }}
                                     src={post?.user?.avatar}
