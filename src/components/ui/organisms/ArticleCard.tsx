@@ -10,46 +10,72 @@ interface SingleArticleProps {
 }
 
 const ArticleCard: React.FC<SingleArticleProps> = ({ post }) => {
-  
   return (
     <Box>
-      <Paper sx={{ position: 'relative', height: '100vh', width: '100%' }}>
-        <Box sx={{ position: 'relative', height: '100%' }}>
+      <Paper sx={{ position: "relative", height: "100vh", width: "100%" }}>
+        <Box sx={{ position: "relative", height: "100%" }}>
           <Image
             alt="post photo"
             src={post.photo}
             layout="fill"
             objectFit="cover"
             objectPosition="center"
-            style={{ filter: 'brightness(0.5)' }}
+            style={{ filter: "brightness(0.5)" }}
           />
           <Box
             sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              textAlign: 'center',
-              color: 'white',
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              textAlign: "center",
+              color: "white",
               zIndex: 1,
             }}
           >
-            <Typography variant="h3" sx={{ marginBottom: 2, fontSize: { xs: '2rem', sm: '3rem' } }}>
+            <Typography
+              variant="h3"
+              sx={{ marginBottom: 2, fontSize: { xs: "2rem", sm: "3rem" } }}
+            >
               {post.title}
             </Typography>
-            <Typography variant="h5" sx={{ marginBottom: 2, fontSize: { xs: '1rem', sm: '1.5rem' } }}>
+            <Typography
+              variant="h5"
+              sx={{ marginBottom: 2, fontSize: { xs: "1rem", sm: "1.5rem" } }}
+            >
               {post.description}
             </Typography>
           </Box>
         </Box>
       </Paper>
       <Paper>
-        <Typography variant="body2" sx={{ marginBottom: 2 }}>
+        <Typography
+          variant="body1"
+          sx={{
+            marginBottom: 2,
+            fontSize: {
+              lg: "1.25rem",
+              md: "1.125rem",
+              sm: "1rem",
+              xs: "0.875rem",
+            },
+            lineHeight: 1.6,
+            color: (theme) => theme.palette.text.primary,
+            mx: { lg: 30, md: 30, sm: 10, xs: 5 },
+          }}
+        >
           {post.content}
         </Typography>
-        <Stack direction="row" spacing={2} justifyContent="space-between" sx={{ marginTop: 2 }}>
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="space-between"
+          sx={{ marginTop: 2 }}
+        >
           <Box>
-            <Typography variant="body2">Posted on: {formatDate(post.createdAt)}</Typography>
+            <Typography variant="body2">
+              Posted on: {formatDate(post.createdAt)}
+            </Typography>
           </Box>
           <Box display="flex" alignItems="center">
             <Avatar
