@@ -1,6 +1,7 @@
 import { IPost } from "@/types";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { PostCard } from "../organisms";
+import Image from "next/image";
 
 interface ArticleProps {
     title: string;
@@ -9,7 +10,7 @@ interface ArticleProps {
 
 const ArticlePage: React.FC<ArticleProps> = ({ title, posts }) => {
     return (
-        <Container maxWidth="xl">
+        <Container maxWidth="xl">            
             <Box sx={{ my: 2 }}>
                 <Typography 
                     sx={{ 
@@ -21,7 +22,8 @@ const ArticlePage: React.FC<ArticleProps> = ({ title, posts }) => {
                     variant="h3"
                 >
                     {title}
-                </Typography>
+                </Typography>                
+
                 <Grid container spacing={2}>
                     {posts.map(post => (
                         <Grid item key={post.title} lg={4}>
@@ -30,6 +32,7 @@ const ArticlePage: React.FC<ArticleProps> = ({ title, posts }) => {
                     ))}
                 </Grid>
             </Box>
+
         </Container>
     )
 }
