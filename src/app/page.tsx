@@ -72,7 +72,7 @@ const Page: NextPage = () => {
           sx={{
             height: "100vh",
             width: "100vw",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
             position: "absolute",
             top: 0,
             left: 0,

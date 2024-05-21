@@ -79,7 +79,7 @@ function SiteNavbar({ session }: SiteSessionProps) {
     <AppBar 
       position="fixed" 
       sx={{ 
-        backgroundColor: isScrolled ? "rgba(0, 0, 0, 0.8)" : "transparent",
+        backgroundColor: isScrolled ? "#32373F" : "transparent",
         boxShadow: isScrolled ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
         transition: "background-color 0.3s ease" 
       }}>

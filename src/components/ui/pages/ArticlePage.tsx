@@ -1,7 +1,8 @@
+"use client";
+
 import { IPost } from "@/types";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { PostCard } from "../organisms";
-import Image from "next/image";
 
 interface ArticleProps {
     title: string;
@@ -10,14 +11,16 @@ interface ArticleProps {
 
 const ArticlePage: React.FC<ArticleProps> = ({ title, posts }) => {
     return (
-        <Container maxWidth="xl">            
+        <Container maxWidth="xl">
             <Box sx={{ my: 2 }}>
                 <Typography 
-                    sx={{ 
+                    sx={{
+                        fontFamily: "Play Fair",
+                        color: (theme) => theme.palette.common.white, 
                         textAlign: "center",
-                        fontSize: {lg: "3rem", md: 20, sm: 20, xs: 20},
-                        py: 2,
-                        pt: 8
+                        fontSize: {lg: "4rem", md: "3.75rem", sm: "3rem", xs: "2rem"},
+                        py: 10,
+                        pt: 5
                     }}
                     variant="h3"
                 >
