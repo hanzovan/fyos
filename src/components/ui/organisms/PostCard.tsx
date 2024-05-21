@@ -5,69 +5,121 @@ import { IPost } from "@/types";
 import { Avatar, Box, Paper, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 interface PostCardProps {
   post: IPost;
 }
 
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
-  return (    
-    <Box sx={{ height: "100%" }}>
-      <Paper sx={{ height: "100%" }}>
+  return (
+    <Box
+      component={Link}
+      href={`/articles/${post.slug}`}
+      passHref
+      sx={{ height: "100%", position: "relative", overflow: "hidden" }}
+    >
+      <Paper
+        sx={{
+          position: "relative",
+          height: "400px",
+          overflow: "hidden",
+          "&:hover .contentOverlay": {
+            transform: "translateY(0)",
+          },
+          "&:hover .description": {
+            opacity: 1,
+          },
+        }}
+      >
         <Box
-          component={Link}
-          href={`/articles/${post.slug}`}
-          passHref
-          sx={{ cursor: "pointer" }}
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            cursor: "pointer",
+          }}
         >
           <Image
-            alt="post photo"
             src={post.photo}
-            height={320}
-            width={320}
-            style={{
-              objectFit: "cover",
-              objectPosition: "center",
-              width: "100%",
-            }}
+            alt={post.title}
+            layout="fill"
+            objectFit="cover"
           />
         </Box>
-        <Box sx={{ p: 1 }}>
-          <Typography
-            component={Link}
-            href={`/articles/${post.slug}`}
-            passHref
+        <Box
+          className="contentOverlay"
+          sx={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            color: "white",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            padding: 2,
+            transition: "transform 0.3s ease-in-out",
+            transform: `translateY(30%)`,
+          }}
+        >
+          <Box
             sx={{
               cursor: "pointer",
-              color: "inherit",
-              textDecoration: "none",
+              mb: "auto",
             }}
-            variant="h5"
           >
-            {post.title}
-          </Typography>
-          <Typography variant="body2">{post.description}</Typography>
+            <Typography variant="h5">{post.title}</Typography>
+            <Typography
+              variant="body2"
+              className="description"
+              sx={{
+                mb: 1,
+                fontSize: "1rem",
+                opacity: 0,
+                transition: "opacity 0.3s ease-in-out",
+              }}
+            >
+              {post.description}
+            </Typography>
+          </Box>
           <Stack
-            sx={{ my: 1 }}
-            direction={"row"}
+            direction="row"
             spacing={2}
-            justifyContent={"space-between"}
+            justifyContent="space-between"
+            alignItems="center"
           >
             <Box>
-              <Typography variant="body2">Posted on: </Typography>
-              <Typography suppressHydrationWarning={true} variant="body2">
-                {formatDate(post.createdAt)}{" "}
+              <Typography
+                variant="body2"
+                sx={{
+                  wordWrap: "break-word",
+                  fontSize: { xs: "0.75rem", md: "0.875rem" },
+                }}
+              >
+                Posted on: {formatDate(post.createdAt)}
               </Typography>
             </Box>
-            <Box>
-              <Link href={`/articles/${post.slug}`} passHref>
-                <Avatar
-                  sx={{ height: 20, width: 20 }}
-                  src={post?.user?.avatar}
-                  alt={post?.user?.name}
-                />
-              </Link>
-              <Typography variant="body2">{post?.user?.name}</Typography>
+            <Box display="flex" alignItems="center">
+              <Avatar
+                sx={{ height: 24, width: 24, mr: 1 }}
+                src={post?.user?.avatar}
+                alt={post?.user?.name}
+              />
+
+              <Typography
+                variant="body2"
+                sx={{
+                  wordWrap: "break-word",
+                  fontSize: { xs: "0.75rem", md: "0.875rem" },
+                }}
+              >
+                {post?.user?.name}
+              </Typography>
             </Box>
           </Stack>
         </Box>

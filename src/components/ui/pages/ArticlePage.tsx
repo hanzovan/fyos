@@ -27,9 +27,9 @@ const ArticlePage: React.FC<ArticleProps> = ({ title, posts }) => {
                     {title}
                 </Typography>                
 
-                <Grid container spacing={2}>
+                <Grid container spacing={5}>
                     {posts.map(post => (
-                        <Grid item key={post.title} lg={4}>
+                        <Grid item key={post.title} lg={4} md={6} xs={12}>
                             <PostCard post={post} />
                         </Grid>
                     ))}
