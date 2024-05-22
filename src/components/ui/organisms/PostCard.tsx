@@ -5,7 +5,6 @@ import { IPost } from "@/types";
 import { Avatar, Box, Paper, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 
 interface PostCardProps {
   post: IPost;
@@ -64,7 +63,9 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             justifyContent: "space-between",
             padding: 2,
             transition: "transform 0.3s ease-in-out",
-            transform: `translateY(30%)`,
+            transform: `translateY(40%)`,
+            pt: "2.4rem",
+            px: "1.5rem",
           }}
         >
           <Box
@@ -73,13 +74,26 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
               mb: "auto",
             }}
           >
-            <Typography variant="h5">{post.title}</Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                fontSize: {
+                  lg: "1.8rem",
+                  md: "1.8rem",
+                  xs: "1.6rem"
+                },
+                mb: "1rem"
+              }}
+            >
+              {post.title}
+            </Typography>
+
             <Typography
               variant="body2"
               className="description"
               sx={{
                 mb: 1,
-                fontSize: "1rem",
+                fontSize: "1.1rem",
                 opacity: 0,
                 transition: "opacity 0.3s ease-in-out",
               }}
