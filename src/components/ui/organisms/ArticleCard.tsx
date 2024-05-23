@@ -14,9 +14,15 @@ const ArticleCard: React.FC<SingleArticleProps> = ({ post }) => {
   return (
     <Box>
       <Paper sx={{ position: "relative", height: "100vh", width: "100%" }}>
-        <HeaderImage photo={post.photo} title={post.title} description={post.description} />
+        <HeaderImage
+          photo={post.photo}
+          title={post.title}
+          description={post.description}
+        />
       </Paper>
-      <Paper>
+      <Paper
+        sx={{ pt: "4rem", pb: "2rem", px: "2rem", backgroundColor: "inherit", color: (theme) => theme.palette.common.white }}
+      >
         <Typography
           variant="body1"
           sx={{
@@ -28,8 +34,8 @@ const ArticleCard: React.FC<SingleArticleProps> = ({ post }) => {
               xs: "0.875rem",
             },
             lineHeight: 1.6,
-            color: (theme) => theme.palette.text.primary,
             mx: { lg: 30, md: 30, sm: 10, xs: 5 },
+            whiteSpace: "pre-wrap", // ensure paragraph break was applied in content
           }}
         >
           {post.content}
