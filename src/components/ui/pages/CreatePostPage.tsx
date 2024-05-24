@@ -114,7 +114,6 @@ const CreatePostPage: React.FC<SiteSessionProps> = ({ session }) => {
   return (
     <Box
       sx={{
-        backgroundColor: (theme) => theme.palette.grey[300],
         minHeight: "100vh",
         pb: 4,
       }}
@@ -127,6 +126,7 @@ const CreatePostPage: React.FC<SiteSessionProps> = ({ session }) => {
               textAlign: "center",
               fontSize: { lg: "3.75rem", md: 20, sm: 20, xs: 20 },
               py: 2,
+              color: "white"
             }}
           >
             Create New Post
