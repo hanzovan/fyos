@@ -48,9 +48,9 @@ const getAllNodePublicPosts = async() => {
     }
 }
 
-const getSinglePublicPost = async(slug: string) => {
+const getSinglePublicPost = async(id: string) => {
     try {
-        const result = await axiosPublicNodeServer.get(`/posts/${slug}?type=public`);
+        const result = await axiosPublicNodeServer.get(`/posts/${id}?type=public`);
         return result.data;
     } catch (error) {
         throw new Error(error instanceof Error ? error.message : "An unknown error occurred while trying postrequest getSinglePublicPost");

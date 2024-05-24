@@ -21,6 +21,7 @@ export interface SiteSessionProps {
 
 // Define an interface for User document that extends mongoose Document
 export interface IUser extends Document {
+    id: string;
     name: string;
     email: string;
     password: string;
@@ -46,6 +47,7 @@ export interface PostResponse {
 
 // Define an interface for Post 
 export interface IPost extends Document {
+    id: string;
     title: string;
     slug: string;
     description: string;

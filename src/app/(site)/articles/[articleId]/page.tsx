@@ -10,22 +10,22 @@ import { SingleArticlePage } from "@/components/ui/pages/SingleArticlePage";
 
 interface ArticlePageProps {
     params: {
-      articleSlug: string;
+      articleId: string;
     };
   }
 
 const ArticlePage: NextPage<ArticlePageProps> = ({ params }) => {
 
-  const { articleSlug } = params;
+  const { articleId } = params;
   const [post, setPost] = useState<IPost | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (articleSlug) {
+    if (articleId) {
       const fetchPost = async () => {
         try {
-          const data = await PostRequest.getSinglePublicPost(articleSlug as string);
+          const data = await PostRequest.getSinglePublicPost(articleId as string);
           setPost(data);
           setIsLoading(false);
         } catch (err) {
@@ -36,7 +36,7 @@ const ArticlePage: NextPage<ArticlePageProps> = ({ params }) => {
 
       fetchPost();
     }
-  }, [articleSlug]);
+  }, [articleId]);
 
   if (isLoading) {
     return (
