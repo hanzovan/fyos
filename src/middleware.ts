@@ -29,6 +29,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         // authenticate the request
         const headerList = headers();
         const authorization = headerList.get("Authorization");
+
         if (!authorization) {
             return new NextResponse("middleware > authorization fail!", { status: 401 });
         }

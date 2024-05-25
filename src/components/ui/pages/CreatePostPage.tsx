@@ -14,6 +14,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const photos = [
@@ -47,6 +48,7 @@ const initialState = {
 const CreatePostPage: React.FC<SiteSessionProps> = ({ session }) => {
   // initial state
   const [state, setState] = useState(initialState);
+  const router = useRouter();
 
   // everytime the title, description, or content change, change the state value accordingly
   // the other part unchanged
@@ -89,13 +91,16 @@ const CreatePostPage: React.FC<SiteSessionProps> = ({ session }) => {
         parsedResult.data,
         session?.accessToken
       );
-
+      
       if (!result.isError) {
-        return setState(() => ({
+        setState(() => ({
           ...initialState,
           isLoading: false,
           message: result.message,
         }));
+        // get post id, then redirect user to that post
+        const postId = result?.data?._id;
+        router.push(`/articles/${postId}`);
       }
       setState((prev) => ({
         ...prev,

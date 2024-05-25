@@ -57,6 +57,29 @@ const getSinglePublicPost = async(id: string) => {
     }
 }
 
-const PostRequest = { createNewPost, getAllNodeAPIPosts, getAllNodePublicPosts, getSinglePublicPost };
+const updatePost = async(id: string, body: any, accessToken: string | undefined): Promise<PostResponse> => {
+    if (!accessToken) {
+        throw new Error("AccessToken not provided");
+    }
+    try {
+        authAxios.accessToken = accessToken
+        const result = await authAxios.put(`/posts/${id}`, body);
+        return {
+            isError: false,
+            data: result.data,
+            message: "Post updated successfully"
+        }
+    } catch (error) {
+        return {
+            isError: true,
+            data: null,
+            message: getErrorMessage(error)
+                ? getErrorMessage(error)
+                : "An unknown error occurred"
+        }
+    }
+}
+
+const PostRequest = { createNewPost, getAllNodeAPIPosts, getAllNodePublicPosts, getSinglePublicPost, updatePost };
 
 export { PostRequest };

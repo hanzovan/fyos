@@ -6,7 +6,7 @@ import { PostRequest } from "@/lib/requests";
 import { IPost } from "@/types";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { getErrorMessage } from "@/lib/utils";
-import { SingleArticlePage } from "@/components/ui/pages/SingleArticlePage";
+import { SingleArticlePage } from "@/components/ui/pages";
 
 interface ArticlePageProps {
     params: {
@@ -17,6 +17,7 @@ interface ArticlePageProps {
 const ArticlePage: NextPage<ArticlePageProps> = ({ params }) => {
 
   const { articleId } = params;
+
   const [post, setPost] = useState<IPost | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
