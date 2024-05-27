@@ -26,7 +26,7 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
       },
     },
     message: "",
-    isLoading: true,
+    isLoading: true, // interacting was disable until original post was fetched and display
   };
   const [state, setState] = useState(initialState);
   const router = useRouter();
@@ -37,7 +37,7 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
         setState((prev) => ({
           ...prev,
           article: data,
-          isLoading: false,
+          isLoading: false, // after fetched the body, allow user to interact
         }));
       });
     }
@@ -66,6 +66,8 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
     }))
   }
   const handleSave = async () => {
+    // start process by disable interaction
+    setState(prev => ({ ...prev, isLoading: true }))
     try {
         const result = await PostRequest.updatePost(articleId as string, {
             title: state.article.title,
@@ -75,16 +77,60 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
         if (result.isError) {
             setState(prev => ({
                 ...prev,
+                isLoading: false,
                 message: result.message
             }))
         } else {
-            router.push(`/articles/${articleId}`);
+            setState(prev => ({
+              ...initialState,
+              isLoading: false,
+              message: result.message
+            }));
+            setTimeout(() => {
+              router.push(`/articles/${articleId}`);
+            }, 100);
         }
     } catch (error) {
         setState(prev => ({
             ...prev,
+            isLoading: false,
             message: error instanceof Error ? error.message: "An unknown error occurred"
         }))
+    }
+  }
+
+  const handleDelete = async () => {
+    // confirm before deleting
+    const confirmDelete = window.confirm("This action cannot be undone! Are you really want to delete this article?")
+    if (!confirmDelete) {
+      return;
+    }
+    
+    setState(prev => ({ ...prev, isLoading: true }))
+    try {
+      const result = await PostRequest.deletePost(articleId as string, session.accessToken);
+      if (result.isError) {
+        setState(prev => ({
+          ...prev,
+          isLoading: false,
+          message: result.message
+        }))
+      } else {
+        setState(prev => ({
+          ...initialState,
+          isLoading: false,
+          message: result.message
+        }))
+        setTimeout(() => {
+          router.push("/");
+        }, 100); // add a small delay
+      }
+    } catch (error) {
+      setState(prev => ({
+        ...prev,
+        isLoading: false,
+        message: error instanceof Error ? error.message : "An unknown error occurred"
+      }))
     }
   }
 
@@ -150,11 +196,11 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
                       {state.message && state.message}
                     </Typography>
                   </Box>
-                  <Box sx={{ textAlign: "center", my: 3 }}>
+                  <Box sx={{ textAlign: "center", my: 3, display: "flex", justifyContent: "center" }}>
                     <Button
                       disabled={state.isLoading}
                       onClick={handleSave}
-                      variant="contained"
+                      variant="contained"                      
                       sx={{ width: 200, borderRadius: 30 }}
                       startIcon={
                         state.isLoading && (
@@ -168,6 +214,25 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
                       }
                     >
                       Save Change
+                    </Button>
+                    <Button
+                      disabled={state.isLoading}
+                      onClick={handleDelete}
+                      variant="contained"
+                      color="error"
+                      sx={{ width: 200, borderRadius: 30, marginLeft: 10 }}
+                      startIcon={
+                        state.isLoading && (
+                          <CircularProgress
+                            size={20}
+                            sx={{
+                              color: (theme) => theme.palette.common.white,
+                            }}
+                          />
+                        )
+                      }
+                    >
+                      Delete Article
                     </Button>
                   </Box>
                 </Box>

@@ -80,6 +80,29 @@ const updatePost = async(id: string, body: any, accessToken: string | undefined)
     }
 }
 
-const PostRequest = { createNewPost, getAllNodeAPIPosts, getAllNodePublicPosts, getSinglePublicPost, updatePost };
+const deletePost = async(id: string, accessToken: string | undefined): Promise<PostResponse> => {
+    if (!accessToken) {
+        throw new Error("AccessToken not provided");
+    }
+    try {
+        authAxios.accessToken = accessToken
+        const result = await authAxios.delete(`/posts/${id}`);
+        return {
+            isError: false,
+            data: result.data,
+            message: "Post deleted successfully"
+        }
+    } catch (error) {
+        return {
+            isError: true,
+            data: null,
+            message: getErrorMessage(error)
+                ? getErrorMessage(error)
+                : "An unknown error occurred"
+        }
+    }
+}
+
+const PostRequest = { createNewPost, getAllNodeAPIPosts, getAllNodePublicPosts, getSinglePublicPost, updatePost, deletePost };
 
 export { PostRequest };

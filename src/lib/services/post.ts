@@ -61,6 +61,32 @@ const updatePost = async (id: string, body: PostBody): Promise<PostResponse> => 
     }
 }
 
+const deletePost = async (id: string): Promise<PostResponse> => {
+    try {
+        const post = await PostModel.findById(id);
+        if (!post) {
+            return {
+                isError: true,
+                data: null,
+                message: "Post not found"
+            }
+        }
+        await PostModel.deleteOne({ _id: id });
+
+        return {
+            isError: false,
+            data: null,
+            message: "Post deleted successfully"
+        }
+    } catch (error: any) {
+        return {
+            isError: true,
+            data: null,
+            message: error.message
+        }
+    }
+}
+
 const getPostById = async (id: string) => {
     try {
         const post = await PostModel.findById(id).populate({ path: "user", select: ["name", "email", "avatar", "_id"], model: UserModel }).lean().exec();
@@ -98,6 +124,6 @@ const getPostById = async (id: string) => {
     }
 }
 
-const PostService = { createNewPost, updatePost, getPostById };
+const PostService = { createNewPost, updatePost, getPostById, deletePost };
 
 export { PostService };
