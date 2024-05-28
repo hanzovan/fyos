@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     // Decode user info from the header (encoded in middleware)
     const user = userHeader ? JSON.parse(Buffer.from(userHeader, "base64").toString()) : null;
 
-    if (!user || !checkUserRole(user?.role).isAdminRole) {
+    if (!user || (!checkUserRole(user?.role).isUserRole && !checkUserRole(user?.role).isAdminRole)) {
         return Response.json("You are not authorized to access this resource", { status: 403 });
     }
 

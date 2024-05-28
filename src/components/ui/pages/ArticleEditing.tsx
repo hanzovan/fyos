@@ -1,7 +1,8 @@
 "use client";
 
 import { PostRequest } from "@/lib/requests";
-import { CustomSession, SiteSessionProps } from "@/types";
+import { checkUserRole } from "@/lib/utils";
+import { CustomSession } from "@/types";
 import { Box, Button, CircularProgress, Container, Grid, Paper, TextField, Typography } from "@mui/material";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -50,8 +51,9 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
     return <Typography>No article found</Typography>;
   }
   const isAuthor = session?.user?.id === state.article.user.id;
+  const isAdmin = session?.user?.role === "admin";
 
-  if (!isAuthor) {
+  if (!isAuthor && !isAdmin) {
     return redirect("/");
   }
 

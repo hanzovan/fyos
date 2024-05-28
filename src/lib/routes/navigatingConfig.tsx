@@ -27,6 +27,7 @@ const userPages = [
 const userMenuItems = [
     routes.dashboard,
     routes.profile,
+    routes.createPost,
     routes.logOut
 ];
 

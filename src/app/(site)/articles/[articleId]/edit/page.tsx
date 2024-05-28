@@ -16,10 +16,6 @@ export default async function Edit({ params }: EditProps) {
     if (!session) {
         return redirect("/api/auth/signin?callbackUrl=/create-post")
     }
-    const checkRole = checkUserRole(session?.user?.role);
-    if (!checkRole.isAdminRole) {
-        return redirect("/")
-    }
     const articleId = params.articleId;
     return <ArticleEditing session={session} articleId={articleId} />;
 }
