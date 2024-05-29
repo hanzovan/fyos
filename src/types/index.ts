@@ -2,20 +2,8 @@ import mongoose, { Document } from "mongoose";
 import { Session } from "next-auth";
 
 // use to define session
-export interface CustomSession extends Session {
-    accessToken?: string;
-    user?: {
-        id?: string | undefined;
-        name?: string | null | undefined;
-        email: string | null;
-        role?: string | undefined;
-        avatar?: string | undefined;
-    }
-}
-
-// use to define session
 export interface SiteSessionProps {
-    session?: CustomSession | null;
+    session?: Session | null;
 }
 
 

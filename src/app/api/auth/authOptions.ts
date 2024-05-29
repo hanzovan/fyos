@@ -3,7 +3,6 @@ import { UserZodSchema } from "@/database/schema";
 import { UserService } from "@/lib/services";
 import { encryptString, signJwtToken, standardizeProfile, verifyJwtToken } from "@/lib/utils";
 import { validateZodInput } from "@/lib/validators";
-import { CustomSession } from "@/types";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { nanoid } from "nanoid";
 import { NextAuthOptions, Session } from "next-auth";
@@ -121,7 +120,7 @@ const authOptions: NextAuthOptions = {
             session: Session;
             token: JWT;
         }): Promise<Session> {
-            const customSession = session as CustomSession;
+            const customSession = session;
             if (token) {
                 customSession.user = token?.user as any;
                 customSession.accessToken = token?.accessToken as string;

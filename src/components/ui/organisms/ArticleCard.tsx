@@ -15,12 +15,13 @@ const ArticleCard: React.FC<SingleArticleProps> = ({ post }) => {
   // Check if user is the author of the post or not
   const { data: session } = useSession();
   const isAuthor = session?.user?.email === post.user.email;
+  const isAdmin = session?.user?.role === "admin";
 
   // if author click edit, redirect them to the editing page
   const router = useRouter();
   const handleEdit = () => {
     router.push(`${post.id}/edit`);
-  }
+  };
   return (
     <Box>
       <Paper sx={{ position: "relative", height: "100vh", width: "100%" }}>
@@ -31,7 +32,13 @@ const ArticleCard: React.FC<SingleArticleProps> = ({ post }) => {
         />
       </Paper>
       <Paper
-        sx={{ pt: "4rem", pb: "2rem", px: "2rem", backgroundColor: "inherit", color: (theme) => theme.palette.common.white }}
+        sx={{
+          pt: "4rem",
+          pb: "2rem",
+          px: "2rem",
+          backgroundColor: "inherit",
+          color: (theme) => theme.palette.common.white,
+        }}
       >
         <Typography
           variant="body1"
@@ -61,22 +68,22 @@ const ArticleCard: React.FC<SingleArticleProps> = ({ post }) => {
               Posted on: {formatDate(post.createdAt)}
             </Typography>
           </Box>
-
-          {/* if user is author allow them to edit */}
-          {isAuthor ? (
-            <Button variant="contained" onClick={handleEdit}>
-              Edit
-            </Button>
-          ) : (
-            <Box display="flex" alignItems="center">
-              <Avatar
-                sx={{ height: 40, width: 40, marginRight: 1 }}
-                src={post.user.avatar}
-                alt={post.user.name}
-              />
-              <Typography variant="body2">{post.user.name}</Typography>
+          {/* if user is author or admin allow them to edit */}
+          {(isAuthor || isAdmin) && (
+            <Box>
+              <Button variant="contained" onClick={handleEdit}>
+                Edit
+              </Button>
             </Box>
-          )}          
+          )}
+          <Box display="flex" alignItems="center">
+            <Avatar
+              sx={{ height: 40, width: 40, marginRight: 1 }}
+              src={post.user.avatar}
+              alt={post.user.name}
+            />
+            <Typography variant="body2">{post.user.name}</Typography>
+          </Box>
         </Stack>
       </Paper>
     </Box>

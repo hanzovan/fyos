@@ -1,14 +1,13 @@
 "use client";
 
 import { PostRequest } from "@/lib/requests";
-import { checkUserRole } from "@/lib/utils";
-import { CustomSession } from "@/types";
 import { Box, Button, CircularProgress, Container, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Session } from "next-auth";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface ArticleEditingProps {
-  session: CustomSession;
+  session: Session;
   articleId: string;
 }
 
