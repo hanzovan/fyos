@@ -72,7 +72,7 @@ const ArticleCard: React.FC<SingleArticleProps> = ({ post }) => {
           {(isAuthor || isAdmin) && (
             <Box>
               <Button variant="contained" onClick={handleEdit}>
-                Edit
+                Edit Article
               </Button>
             </Box>
           )}

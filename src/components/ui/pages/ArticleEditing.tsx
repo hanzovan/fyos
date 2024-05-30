@@ -44,7 +44,18 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
   }, [articleId]);
 
   if (state.isLoading) {
-    return <CircularProgress />;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
   if (!state.article) {
     return <Typography>No article found</Typography>;
