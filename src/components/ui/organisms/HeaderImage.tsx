@@ -38,7 +38,7 @@ const HeaderImage: React.FC<HeaderImageProps> = ({ photo, title, description }) 
             </Typography>
             <Typography
               variant="h5"
-              sx={{ marginBottom: 2, fontSize: { xs: "1rem", sm: "1.5rem" } }}
+              sx={{ marginBottom: 2, fontSize: { xs: "1.2rem", sm: "1.8rem" } }}
             >
               {description}
             </Typography>

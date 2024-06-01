@@ -45,13 +45,14 @@ const ArticleCard: React.FC<SingleArticleProps> = ({ post }) => {
           sx={{
             marginBottom: 2,
             fontSize: {
-              lg: "1.25rem",
-              md: "1.125rem",
-              sm: "1rem",
-              xs: "0.875rem",
+              lg: "1.3rem",
+              md: "1.2rem",
+              sm: "1.2rem",
+              xs: "1.2rem",
             },
             lineHeight: 1.6,
-            mx: { lg: 30, md: 30, sm: 10, xs: 5 },
+            maxWidth: "40rem",
+            mx:"auto",
             whiteSpace: "pre-wrap", // ensure paragraph break was applied in content
           }}
         >
