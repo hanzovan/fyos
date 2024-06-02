@@ -20,7 +20,7 @@ const ArticleCard: React.FC<SingleArticleProps> = ({ post }) => {
   // if author click edit, redirect them to the editing page
   const router = useRouter();
   const handleEdit = () => {
-    router.push(`${post.id}/edit`);
+    router.push(`${post.slug}/edit`);
   };
   return (
     <Box>

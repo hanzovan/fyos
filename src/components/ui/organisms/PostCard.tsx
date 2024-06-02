@@ -14,7 +14,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   return (
     <Box
       component={Link}
-      href={`/articles/${post.id}`}
+      href={`/articles/${post.slug}`}
       passHref
       sx={{ height: "100%", position: "relative", overflow: "hidden" }}
     >

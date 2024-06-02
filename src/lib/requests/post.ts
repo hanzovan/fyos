@@ -48,22 +48,22 @@ const getAllNodePublicPosts = async() => {
     }
 }
 
-const getSinglePublicPost = async(id: string) => {
+const getSinglePublicPost = async(slug: string) => {
     try {
-        const result = await axiosPublicNodeServer.get(`/posts/${id}?type=public`);
+        const result = await axiosPublicNodeServer.get(`/posts/${slug}?type=public`);
         return result.data;
     } catch (error) {
         throw new Error(error instanceof Error ? error.message : "An unknown error occurred while trying postrequest getSinglePublicPost");
     }
 }
 
-const updatePost = async(id: string, body: any, accessToken: string | undefined): Promise<PostResponse> => {
+const updatePost = async(slug: string, body: any, accessToken: string | undefined): Promise<PostResponse> => {
     if (!accessToken) {
         throw new Error("AccessToken not provided");
     }
     try {
         authAxios.accessToken = accessToken
-        const result = await authAxios.put(`/posts/${id}`, body);
+        const result = await authAxios.put(`/posts/${slug}`, body);
         return {
             isError: false,
             data: result.data,
@@ -80,13 +80,13 @@ const updatePost = async(id: string, body: any, accessToken: string | undefined)
     }
 }
 
-const deletePost = async(id: string, accessToken: string | undefined): Promise<PostResponse> => {
+const deletePost = async(slug: string, accessToken: string | undefined): Promise<PostResponse> => {
     if (!accessToken) {
         throw new Error("AccessToken not provided");
     }
     try {
         authAxios.accessToken = accessToken
-        const result = await authAxios.delete(`/posts/${id}`);
+        const result = await authAxios.delete(`/posts/${slug}`);
         return {
             isError: false,
             data: result.data,

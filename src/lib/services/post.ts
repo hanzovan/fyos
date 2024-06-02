@@ -38,9 +38,9 @@ const createNewPost = async (body: PostBody): Promise<PostResponse> => {
     }
 }
 
-const updatePost = async (id: string, body: PostBody): Promise<PostResponse> => {
+const updatePost = async (slug: string, body: PostBody): Promise<PostResponse> => {
     try {
-        const post = await PostModel.findById(id);
+        const post = await PostModel.findOne({ slug });
 
         if (!post) {
             return {
@@ -76,9 +76,9 @@ const updatePost = async (id: string, body: PostBody): Promise<PostResponse> => 
     }
 }
 
-const deletePost = async (id: string): Promise<PostResponse> => {
+const deletePost = async (slug: string): Promise<PostResponse> => {
     try {
-        const post = await PostModel.findById(id);
+        const post = await PostModel.findOne({ slug });
         if (!post) {
             return {
                 isError: true,
@@ -86,7 +86,7 @@ const deletePost = async (id: string): Promise<PostResponse> => {
                 message: "Post not found"
             }
         }
-        await PostModel.deleteOne({ _id: id });
+        await PostModel.deleteOne({ slug });
 
         return {
             isError: false,
@@ -102,9 +102,9 @@ const deletePost = async (id: string): Promise<PostResponse> => {
     }
 }
 
-const getPostById = async (id: string) => {
+const getPostBySlug = async (slug: string) => {
     try {
-        const post = await PostModel.findById(id).populate({ path: "user", select: ["name", "email", "avatar", "_id"], model: UserModel }).lean().exec();
+        const post = await PostModel.findOne({ slug }).populate({ path: "user", select: ["name", "email", "avatar", "_id"], model: UserModel }).lean().exec();
         
         if (!post) {
             return {
@@ -139,6 +139,6 @@ const getPostById = async (id: string) => {
     }
 }
 
-const PostService = { createNewPost, updatePost, getPostById, deletePost };
+const PostService = { createNewPost, updatePost, getPostBySlug, deletePost };
 
 export { PostService };

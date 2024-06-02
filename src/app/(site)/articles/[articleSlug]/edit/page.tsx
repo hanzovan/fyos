@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 interface EditProps {
     params: {
-        articleId: string;
+        articleSlug: string;
     }
 }
 
@@ -14,6 +14,6 @@ export default async function Edit({ params }: EditProps) {
     if (!session) {
         return redirect("/api/auth/signin?callbackUrl=/create-post")
     }
-    const articleId = params.articleId;
-    return <ArticleEditing session={session} articleId={articleId} />;
+    const articleSlug = params.articleSlug;
+    return <ArticleEditing session={session} articleSlug={articleSlug} />;
 }

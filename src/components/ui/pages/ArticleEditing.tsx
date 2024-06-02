@@ -8,12 +8,12 @@ import { useEffect, useState } from "react";
 
 interface ArticleEditingProps {
   session: Session;
-  articleId: string;
+  articleSlug: string;
 }
 
 const ArticleEditing: React.FC<ArticleEditingProps> = ({
   session,
-  articleId,
+  articleSlug,
 }) => {
 
   const initialState = {
@@ -32,8 +32,8 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
   const router = useRouter();
 
   useEffect(() => {
-    if (articleId) {
-      PostRequest.getSinglePublicPost(articleId as string).then((data) => {
+    if (articleSlug) {
+      PostRequest.getSinglePublicPost(articleSlug as string).then((data) => {
         setState((prev) => ({
           ...prev,
           article: data,
@@ -41,7 +41,7 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
         }));
       });
     }
-  }, [articleId]);
+  }, [articleSlug]);
 
   if (state.isLoading) {
     return (
@@ -81,7 +81,7 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
     // start process by disable interaction
     setState(prev => ({ ...prev, isLoading: true }))
     try {
-        const result = await PostRequest.updatePost(articleId as string, {
+        const result = await PostRequest.updatePost(articleSlug as string, {
             title: state.article.title,
             description: state.article.description,
             content: state.article.content
@@ -93,13 +93,14 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
                 message: result.message
             }))
         } else {
+            const newSlug = result.data.data.slug;
             setState(prev => ({
               ...initialState,
               isLoading: false,
               message: result.message
             }));
             setTimeout(() => {
-              router.push(`/articles/${articleId}`);
+              router.push(`/articles/${newSlug}`);
             }, 100);
         }
     } catch (error) {
@@ -120,7 +121,7 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
     
     setState(prev => ({ ...prev, isLoading: true }))
     try {
-      const result = await PostRequest.deletePost(articleId as string, session.accessToken);
+      const result = await PostRequest.deletePost(articleSlug as string, session.accessToken);
       if (result.isError) {
         setState(prev => ({
           ...prev,
