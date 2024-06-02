@@ -3,10 +3,26 @@ import { PostBody, PostResponse } from "@/types";
 import { nanoid } from "nanoid";
 import slugify from "slugify";
 
+// Function to generate a unique slug
+const generateUniqueSlug = async (title: string): Promise<string> => {
+    let original_slug = slugify(title, { replacement: "-", lower:true });
+    let slug = original_slug;
+    let existingPost = await PostModel.findOne({ slug });
+    let counter = 2; // if there the same slug, the next slug should start from 2
+
+    // while post with same slug exist, doing this
+    while (existingPost) {
+        slug = `${original_slug}-${counter}`;
+        existingPost = await PostModel.findOne({ slug });
+        counter++;
+    }
+
+    return slug;
+}
+
 const createNewPost = async (body: PostBody): Promise<PostResponse> => {
     try {
-        const title = `${body.title}-${nanoid(5)}`;
-        const slug = slugify(title, { replacement: "-" });
+        const slug = await generateUniqueSlug(body.title);
         const result = await PostModel.create({ ...body, slug });
         return {
             isError: false,
@@ -40,8 +56,7 @@ const updatePost = async (id: string, body: PostBody): Promise<PostResponse> => 
 
         // update slug if title changed
         if (body.title) {
-            const title = `${body.title}-${nanoid(5)}`;
-            post.slug = slugify(title, { replacement: "-" });
+            post.slug = await generateUniqueSlug(body.title);
         }
 
         const updatedPost = await post.save();
