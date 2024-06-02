@@ -24,13 +24,11 @@ const ArticleCard: React.FC<SingleArticleProps> = ({ post }) => {
   };
   return (
     <Box>
-      <Paper sx={{ position: "relative", height: "100vh", width: "100%" }}>
-        <HeaderImage
-          photo={post.photo}
-          title={post.title}
-          description={post.description}
-        />
-      </Paper>
+      <HeaderImage
+        photo={post.photo}
+        title={post.title}
+        description={post.description}
+      />
       <Paper
         sx={{
           pt: "4rem",
@@ -52,7 +50,7 @@ const ArticleCard: React.FC<SingleArticleProps> = ({ post }) => {
             },
             lineHeight: 1.6,
             maxWidth: "40rem",
-            mx:"auto",
+            mx: "auto",
             whiteSpace: "pre-wrap", // ensure paragraph break was applied in content
           }}
         >
