@@ -99,8 +99,8 @@ const CreatePostPage: React.FC<SiteSessionProps> = ({ session }) => {
           message: result.message,
         }));
         // get post id, then redirect user to that post
-        const postId = result?.data?._id;
-        router.push(`/articles/${postId}`);
+        const slug = result?.data?.slug;
+        router.push(`/articles/${slug}`);
       }
       setState((prev) => ({
         ...prev,
