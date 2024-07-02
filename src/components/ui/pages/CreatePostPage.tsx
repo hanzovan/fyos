@@ -15,7 +15,76 @@ import {
   Typography,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// import for editor
+import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
+import { LexicalComposer } from "@lexical/react/LexicalComposer";
+import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import {
+  MuiContentEditable,
+  placeHolderSx,
+} from "../organisms/LexicalEditor/styles";
+import { ToolbarPlugin, TreeViewPlugin } from "../organisms/LexicalEditor/plugins";
+import YouTubePlugin from "../organisms/LexicalEditor/plugins/YouTubePlugin";
+import MyNodes from "../organisms/LexicalEditor/nodes/MyNodes";
+import AutoEmbedPlugin from "../organisms/LexicalEditor/plugins/AutoEmbedPlugin";
+
+const theme = {
+  code: "editor-code",
+  heading: {
+    h1: "editor-heading-h1",
+    h2: "editor-heading-h2",
+    h3: "editor-heading-h3",
+    h4: "editor-heading-h4",
+    h5: "editor-heading-h5",
+  },
+  image: "editor-image",
+  link: "editor-link",
+  list: {
+    listitem: "editor-listitem",
+    nested: {
+      listitem: "editor-nested-listitem",
+    },
+    ol: "editor-list-ol",
+    ul: "editor-list-ul",
+  },
+  ltr: "ltr",
+  paragraph: "editor-paragraph",
+  placeholder: "editor-placeholder",
+  quote: "editor-quote",
+  rtl: "rtl",
+  text: {
+    bold: "editor-text-bold",
+    code: "editor-text-code",
+    hashtag: "editor-text-hashtag",
+    italic: "editor-text-italic",
+    overflowed: "editor-text-overflowed",
+    strikethrough: "editor-text-strikethrough",
+    underline: "editor-text-underline",
+    underlineStrikethrough: "editor-text-underlineStrikethrough",
+  },
+};
+
+// Catch any errors that occur during Lexical updates and log them
+// or throw them as needed. If you don't throw them, Lexical will
+// try to recover gracefully without losing user data.
+function onError(error: any) {
+  console.error(error);
+}
+
+function MyOnChangePlugin({ onChange }: { onChange: any }) {
+  const [editor] = useLexicalComposerContext();
+  useEffect(() => {
+    return editor.registerUpdateListener(({ editorState }) => {
+      onChange(editorState);
+    });
+  }, [editor, onChange]);
+  return null;
+}
 
 const photos = [
   "/post1.jpg",
@@ -65,6 +134,29 @@ const CreatePostPage: React.FC<SiteSessionProps> = ({ session }) => {
     }));
   };
 
+  // Lexical editor config
+  const editorConfig = {
+    namespace: "MyEditor",
+    nodes: [...MyNodes],
+    theme: theme,
+    onError,
+  };
+
+  const [editorState, setEditorState] = useState<string | undefined>();
+
+  function editorOnChange(editorState: any) {
+    const editorStateJSON = editorState.toJSON();
+    setEditorState(JSON.stringify(editorStateJSON));
+
+    setState((prev) => ({
+      ...prev,
+      body: {
+        ...prev.body,
+        content: JSON.stringify(editorStateJSON),
+      },
+    }));
+  }
+
   // when user submit, add a random photo to the state, parse the load to validate
   const handleSubmit = async (
     event: React.MouseEvent<HTMLButtonElement>
@@ -91,7 +183,7 @@ const CreatePostPage: React.FC<SiteSessionProps> = ({ session }) => {
         parsedResult.data,
         session?.accessToken
       );
-      
+
       if (!result.isError) {
         setState(() => ({
           ...initialState,
@@ -131,7 +223,7 @@ const CreatePostPage: React.FC<SiteSessionProps> = ({ session }) => {
               textAlign: "center",
               fontSize: { lg: "3.75rem", md: 20, sm: 20, xs: 20 },
               py: 2,
-              color: "white"
+              color: "white",
             }}
           >
             Create New Post
@@ -161,17 +253,44 @@ const CreatePostPage: React.FC<SiteSessionProps> = ({ session }) => {
                     />
                   </Box>
                   <Box sx={{ my: 3 }}>
-                    <TextField
-                      fullWidth
-                      id="content"
-                      name="content"
-                      label="Post Content"
-                      value={state.body.content}
-                      onChange={handleInputChange}
-                      multiline
-                      minRows={10}
-                      maxRows={12}
-                    />
+                    <LexicalComposer initialConfig={editorConfig}>
+                      <Box
+                        sx={{
+                          my: 3,
+                          borderRadius: 2,
+                          color: "black",
+                          position: "relative",
+                          lineHeight: 20,
+                          fontWeight: 400,
+                          textAlign: "left",
+                          borderTopLeftRadius: 10,
+                          borderTopRightRadius: 10,
+                        }}
+                      >
+                        <ToolbarPlugin />
+                        <Box
+                          sx={{
+                            position: "relative",
+                            background: "white",
+                            mt: 1,
+                          }}
+                        >
+                          <RichTextPlugin
+                            contentEditable={<MuiContentEditable />}
+                            placeholder={
+                              <Box sx={placeHolderSx}>Post Content</Box>
+                            }
+                            ErrorBoundary={LexicalErrorBoundary}
+                          />
+                          <HistoryPlugin />
+                          <YouTubePlugin />
+                          <AutoFocusPlugin />
+                          <AutoEmbedPlugin />
+                          {/* <TreeViewPlugin /> */}
+                          <MyOnChangePlugin onChange={editorOnChange} />
+                        </Box>
+                      </Box>
+                    </LexicalComposer>
                   </Box>
                   <Box sx={{ my: 3 }}>
                     <Typography color="error" sx={{ whiteSpace: "pre-wrap" }}>
