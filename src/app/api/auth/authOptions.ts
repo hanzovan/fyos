@@ -76,7 +76,7 @@ const authOptions: NextAuthOptions = {
                     placeholder: "Enter your password"
                 }
             },
-            async authorize(credentials) {
+            async authorize(credentials: any): Promise<any> {
                 try {
                     // validate inputs
                     const parsedResult = validateZodInput(credentials, UserZodSchema);
