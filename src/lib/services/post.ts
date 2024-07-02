@@ -126,8 +126,11 @@ const getPostBySlug = async (slug: string) => {
 
     const data = {
       ...post,
-      id: post._id?.toString(),
-      user: { ...post.user ?? "author not found", id: post?.user?._id.toString() },
+      id: post._id.toString(),
+      user: { 
+        ...post.user, 
+        id: post.user._id.toString() 
+        },
     };
 
     return {
