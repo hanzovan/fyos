@@ -124,14 +124,22 @@ const getPostBySlug = async (slug: string) => {
       };
     }
 
+    let user;
+
+    if (post.user && post.user._id) {
+        user = {
+            ...post.user,
+            id: post.user._id.toString()
+        };
+    } else {
+        user = "author not found";
+    }
+    
     const data = {
-      ...post,
-      id: post._id.toString(),
-      user: { 
-        ...post.user, 
-        id: post.user._id.toString() 
-        },
-    };
+        ...post,
+        id: post._id?.toString(),
+        user
+    }
 
     return {
       isError: false,
