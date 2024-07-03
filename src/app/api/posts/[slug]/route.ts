@@ -87,7 +87,7 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
       )
     }
     // check if user is author or admin
-    const isAuthor = user.id === post.data?.user?.id;
+    const isAuthor = typeof post.data?.user !== "string" && user.id === post.data?.user.id;
     const checkRole = checkUserRole(user.role);
     const isAdmin = checkRole.isAdminRole;
 
