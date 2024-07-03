@@ -36,7 +36,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     }
 
     // check if user is the author of the original post or admin, if not reject request
-    const isAuthor = user.id === post.data?.user?.id;
+    const isAuthor = typeof post.data?.user !== "string" && user.id === post.data?.user.id;
     const checkRole = checkUserRole(user.role);
     const isAdmin = checkRole.isAdminRole;
 
