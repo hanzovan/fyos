@@ -28,7 +28,7 @@ import {
   MuiContentEditable,
   placeHolderSx,
 } from "../organisms/LexicalEditor/styles";
-import { ToolbarPlugin, TreeViewPlugin } from "../organisms/LexicalEditor/plugins";
+import { MyOnChangePlugin, ToolbarPlugin, TreeViewPlugin } from "../organisms/LexicalEditor/plugins";
 import YouTubePlugin from "../organisms/LexicalEditor/plugins/YouTubePlugin";
 import MyNodes from "../organisms/LexicalEditor/nodes/MyNodes";
 import AutoEmbedPlugin from "../organisms/LexicalEditor/plugins/AutoEmbedPlugin";
@@ -76,15 +76,15 @@ function onError(error: any) {
   console.error(error);
 }
 
-function MyOnChangePlugin({ onChange }: { onChange: any }) {
-  const [editor] = useLexicalComposerContext();
-  useEffect(() => {
-    return editor.registerUpdateListener(({ editorState }) => {
-      onChange(editorState);
-    });
-  }, [editor, onChange]);
-  return null;
-}
+// function MyOnChangePlugin({ onChange }: { onChange: any }) {
+//   const [editor] = useLexicalComposerContext();
+//   useEffect(() => {
+//     return editor.registerUpdateListener(({ editorState }) => {
+//       onChange(editorState);
+//     });
+//   }, [editor, onChange]);
+//   return null;
+// }
 
 const photos = [
   "/post1.jpg",
@@ -144,6 +144,7 @@ const CreatePostPage: React.FC<SiteSessionProps> = ({ session }) => {
 
   const [editorState, setEditorState] = useState<string | undefined>();
 
+  // When being trigger by MyEditorOnChange, set Editorstate to current state, stringify it and set the body's content to new state
   function editorOnChange(editorState: any) {
     const editorStateJSON = editorState.toJSON();
     setEditorState(JSON.stringify(editorStateJSON));

@@ -136,6 +136,15 @@ export function ToolbarPlugin() {
       </button>
       <Divider />
 
+      {/* my insert image button
+      <button 
+        onClick={() => {
+          editor.dispatchCommand(INSERT_EMBED_COMMAND, "youtube-video")
+        }}
+        className="toolbar-item spaced">
+        <i className="format insert-image" />
+      </button> */}
+
       {/* my insert video button */}
       <button 
         onClick={() => {
@@ -144,6 +153,7 @@ export function ToolbarPlugin() {
         className="toolbar-item spaced">
         <i className="format insert-video" />
       </button>
+
       <Divider />
       <button
         onClick={() => {
