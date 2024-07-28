@@ -76,16 +76,6 @@ function onError(error: any) {
   console.error(error);
 }
 
-// function MyOnChangePlugin({ onChange }: { onChange: any }) {
-//   const [editor] = useLexicalComposerContext();
-//   useEffect(() => {
-//     return editor.registerUpdateListener(({ editorState }) => {
-//       onChange(editorState);
-//     });
-//   }, [editor, onChange]);
-//   return null;
-// }
-
 const photos = [
   "/post1.jpg",
   "/post2.jpg",
@@ -191,7 +181,8 @@ const CreatePostPage: React.FC<SiteSessionProps> = ({ session }) => {
           isLoading: false,
           message: result.message,
         }));
-        // get post id, then redirect user to that post
+
+        // After creating post succcessfully, get post id, then redirect user to that post
         const slug = result?.data?.slug;
         router.push(`/articles/${slug}`);
       }
