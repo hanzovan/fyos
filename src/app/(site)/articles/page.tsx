@@ -47,7 +47,7 @@ const Page: NextPage = () => {
   return (
     <ArticlePage
       posts={posts}
-      title="Client Site Post fetching from node server"
+      title="All Public Articles"
     />
   );
 };

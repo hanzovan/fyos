@@ -20,8 +20,10 @@ const adminNavItems = [
 const userPages = [
     routes.dashboard,
     routes.articles,
-    routes.blog,
-    routes.posts
+
+    // They provide the same resources, just different from the retrieving method
+    // routes.blog,
+    // routes.posts
 ];
 
 const userMenuItems = [
