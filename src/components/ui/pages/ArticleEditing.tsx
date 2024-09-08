@@ -95,26 +95,10 @@ function MyEditingPlugin({
         const newEditorState = editor.parseEditorState(editorStateJSON);
         editor.setEditorState(newEditorState);
       });
-      // editor.setEditable(false);
     }
   }, [editor]);
   return null;
 }
-
-// function MyPlugin({ savedEditorStateRef }: { savedEditorStateRef: string }) {
-//   const [editor] = useLexicalComposerContext();
-//   useEffect(() => {
-//     if (savedEditorStateRef) {
-//       const editorStateJSON = JSON.parse(savedEditorStateRef);
-//       editor.update(() => {
-//         const newEditorState = editor.parseEditorState(editorStateJSON);
-//         editor.setEditorState(newEditorState);
-//       });
-//       editor.setEditable(false);
-//     }
-//   }, [editor]);
-//   return null;
-// }
 
 interface ArticleEditingProps {
   session: Session;
@@ -159,7 +143,7 @@ const ArticleEditing: React.FC<ArticleEditingProps> = ({
   // fetch post from database using useEffect
   useEffect(() => {
     if (articleSlug) {
-      PostRequest.getSinglePublicPost(articleSlug as string).then((data) => {
+      PostRequest.getSinglePost(articleSlug as string).then((data) => {
         setState((prev) => ({
           ...prev,
           article: data,

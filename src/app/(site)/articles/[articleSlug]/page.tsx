@@ -26,7 +26,9 @@ const ArticlePage: NextPage<ArticlePageProps> = ({ params }) => {
     if (articleSlug) {
       const fetchPost = async () => {
         try {
-          const data = await PostRequest.getSinglePublicPost(articleSlug as string);
+          // const data = await PostRequest.getSinglePublicPost(articleSlug as string);
+          const data = await PostRequest.getSinglePost(articleSlug as string)
+
           setPost(data);
           setIsLoading(false);
         } catch (err) {

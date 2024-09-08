@@ -33,3 +33,11 @@ export async function POST(req: NextRequest) {
     }
     return Response.json(result.data);
 }
+
+export async function GET(request: NextRequest) {
+    const result = await PostService.getAllPosts();
+    if (result.isError) {
+        return Response.json(result.message, { status: 500 });
+    }
+    return Response.json(result.data)
+}

@@ -8,11 +8,20 @@ import { NextPage } from "next";
 import useSWR from "swr";
 
 const Page: NextPage = () => {
+
+  // Get posts from node server
+  // const {
+  //   data: posts,
+  //   isLoading,
+  //   error,
+  // } = useSWR("/posts", PostRequest.getAllNodePublicPosts);
+
+  // Get posts from local server
   const {
     data: posts,
     isLoading,
-    error,
-  } = useSWR("/posts", PostRequest.getAllNodePublicPosts);
+    error
+  } = useSWR(["/posts", ], () => PostRequest.getPublicPosts())
 
   if (isLoading) {
     return (

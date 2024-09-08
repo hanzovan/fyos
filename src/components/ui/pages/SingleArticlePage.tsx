@@ -8,6 +8,7 @@ interface SingleArticleProps {
 }
 
 const SingleArticlePage: React.FC<SingleArticleProps> = ({ post }) => {
+
   return <ArticleCard post={post} />
 };
 

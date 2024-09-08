@@ -11,7 +11,10 @@ export const config = {
     ]
 }
 
-const publicPostsRegexPattern = /^\/api\/posts\?type=public$/;
+// const publicPostsRegexPattern = /^\/api\/posts\?type=public$/;
+
+// now make exception for both /api/posts?type=public and /api/posts/slug?type=public
+const publicPostsRegexPattern = /^\/api\/posts(?:\/[\w-]+)?\?type=public$/;
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
     try {

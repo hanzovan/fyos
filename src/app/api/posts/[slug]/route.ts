@@ -110,3 +110,27 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
     )
   }
 }
+
+export async function GET(req: NextRequest, res: NextResponse) {
+  const slug = req.nextUrl.pathname.split("/").pop();
+  if (!slug) {
+    return NextResponse.json(
+      { isError: true, message: "Slug is required" },
+      { status: 400 }
+    )
+  } try {
+    const post = await PostService.getPostBySlug(slug)
+    if (!post) {
+      return NextResponse.json(
+        { isError: true, message: "Post not found" },
+        { status: 404 }
+      )
+    }
+
+    return NextResponse.json(post.data, { status: 200})
+  } catch (error: any) {
+    return NextResponse.json({ isError: true, message: error.message }, { status: 500 })
+  }
+}
+
+

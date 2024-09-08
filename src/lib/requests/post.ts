@@ -1,5 +1,5 @@
 import { PostBody, PostResponse } from "@/types";
-import { authAxios, authNodeAxios, axiosPublicNodeServer } from "../config";
+import { authAxios, authNodeAxios, axiosPublic, axiosPublicNodeServer } from "../config";
 import { getErrorMessage } from "../utils";
 
 const createNewPost = async (body: PostBody, accessToken: string | undefined): Promise<PostResponse> => {
@@ -48,12 +48,33 @@ const getAllNodePublicPosts = async() => {
     }
 }
 
+// get posts from 1st server, not the node server
+const getPublicPosts = async() => {
+    try {
+        const result = await axiosPublic.get("/posts?type=public")
+        return result.data
+    } catch (error) {
+        throw new Error(error instanceof Error ? error.message : 'An unknown error occurred while trying lib.getPublicPosts');
+    }
+}
+
 const getSinglePublicPost = async(slug: string) => {
     try {
         const result = await axiosPublicNodeServer.get(`/posts/${slug}?type=public`);
         return result.data;
     } catch (error) {
         throw new Error(error instanceof Error ? error.message : "An unknown error occurred while trying postrequest getSinglePublicPost");
+    }
+}
+
+// get single post from local server
+const getSinglePost = async(slug: string) => {
+    try {
+        const result = await axiosPublic.get(`/posts/${slug}?type=public`);
+        
+        return result.data;
+    } catch (error) {
+        throw new Error(error instanceof Error ? error.message : 'An unknown error occurred');
     }
 }
 
@@ -103,6 +124,6 @@ const deletePost = async(slug: string, accessToken: string | undefined): Promise
     }
 }
 
-const PostRequest = { createNewPost, getAllNodeAPIPosts, getAllNodePublicPosts, getSinglePublicPost, updatePost, deletePost };
+const PostRequest = { createNewPost, getAllNodeAPIPosts, getAllNodePublicPosts, getSinglePublicPost, updatePost, deletePost, getPublicPosts, getSinglePost };
 
 export { PostRequest };

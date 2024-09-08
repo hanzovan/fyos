@@ -87,7 +87,9 @@ interface SingleArticleProps {
 const ArticleCard: React.FC<SingleArticleProps> = ({ post }) => {
   // Check if user is the author of the post or not
   const { data: session } = useSession();
-  const isAuthor = session?.user?.email === post.user.email;
+
+  const isAuthor = session?.user?.email === post.user?.email;
+
   const isAdmin = session?.user?.role === "admin";
 
   // if author click edit, redirect them to the editing page
@@ -182,10 +184,10 @@ const ArticleCard: React.FC<SingleArticleProps> = ({ post }) => {
           <Box display="flex" alignItems="center">
             <Avatar
               sx={{ height: 40, width: 40, marginRight: 1 }}
-              src={post.user.avatar}
-              alt={post.user.name}
+              src={post.user?.avatar}
+              alt={post.user?.name}
             />
-            <Typography variant="body2">{post.user.name}</Typography>
+            <Typography variant="body2">{post.user?.name}</Typography>
           </Box>
         </Stack>
       </Paper>

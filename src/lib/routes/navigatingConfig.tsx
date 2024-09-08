@@ -3,22 +3,22 @@ import { routes } from "./routes";
 const publicPages = [routes.articles];
 
 const adminPages = [
-    routes.dashboard,
+    // routes.dashboard,
     routes.articles,
-    routes.blog,
-    routes.posts,
-    routes.users
+    // routes.blog,
+    // routes.posts,
+    // routes.users
 ];
 
 const adminNavItems = [
-    routes.dashboard,
+    // routes.dashboard,
     routes.profile,
     routes.createPost,
     routes.logOut
 ];
 
 const userPages = [
-    routes.dashboard,
+    // routes.dashboard,
     routes.articles,
 
     // They provide the same resources, just different from the retrieving method
@@ -27,7 +27,7 @@ const userPages = [
 ];
 
 const userMenuItems = [
-    routes.dashboard,
+    // routes.dashboard,
     routes.profile,
     routes.createPost,
     routes.logOut

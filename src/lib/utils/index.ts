@@ -121,7 +121,11 @@ export const checkUserRole = (role: string | undefined) => {
 }
 
 export const formatDate = (date: any) => {
-    return new Intl.DateTimeFormat(undefined, { dateStyle: "short", timeStyle: "short" }).format(new Date(date))
+    const parsedDate = new Date(date);
+    if (isNaN(parsedDate.getTime())) {
+        return "Invalid date";
+    }
+    return new Intl.DateTimeFormat(undefined, { dateStyle: "short", timeStyle: "short" }).format(parsedDate)
 }
 
 export const getErrorMessage = (error: any) => {

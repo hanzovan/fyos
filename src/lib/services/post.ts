@@ -138,7 +138,7 @@ const getPostBySlug = async (slug: string) => {
     const data = {
         ...post,
         id: post._id?.toString(),
-        user
+        user: { ...post.user, id: post?.user?._id?.toString() }
     }
 
     return {
@@ -158,6 +158,20 @@ const getPostBySlug = async (slug: string) => {
   }
 };
 
-const PostService = { createNewPost, updatePost, getPostBySlug, deletePost };
+const getAllPosts = async () => {
+  try {
+    const result = await PostModel.find({}).populate({ path: "user", select: ["name", "email", "avatar", "_id"]}).lean().exec();
+    const data = result?.map(post => ({
+      ...post,
+      id: post._id?.toString(),
+      user: {...post.user, id: post?.user?._id?.toString()}
+    }));
+    return { isError: false, data, message: "Get all posts successfully"}
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : 'An unknown error occurred');
+  }
+} 
+
+const PostService = { createNewPost, updatePost, getPostBySlug, deletePost, getAllPosts };
 
 export { PostService };

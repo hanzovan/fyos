@@ -13,7 +13,8 @@ const Page: NextPage = () => {
     data: posts,
     isLoading,
     error,
-  } = useSWR("/posts", PostRequest.getAllNodePublicPosts);
+  // } = useSWR("/posts", PostRequest.getAllNodePublicPosts);
+  } = useSWR("/posts", PostRequest.getPublicPosts);
 
   if (isLoading) {
     return (

@@ -4,6 +4,14 @@ import { PostRequest } from "@/lib/requests";
 import { Session, getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
+// custom error
+class CustomError extends Error {
+    constructor(message: string, public details?: any) {
+        super(message);
+        this.name = "CustomError";
+    }
+}
+
 export default async function Home() {
     try {
         const session = await getServerSession(authOptions) as Session | null;
@@ -14,6 +22,15 @@ export default async function Home() {
 
         return <ArticlePage posts={posts} title="External Node API posts fetching" />
     } catch (error) {
-        throw new Error(error instanceof Error ? error.message : 'An unknown error occurred');
+
+        if (error instanceof Error) {
+            console.error("An error occurred:", error.message, error.stack);
+            throw new CustomError(error.message, {stack: error.stack})
+        } else {
+            console.error("An unknown error occurred:", error);
+            throw new CustomError("An unknown error occurred:", {error})
+        }
+        
+        // throw new Error(error instanceof Error ? error.message : 'An unknown error occurred');
     }
 }
